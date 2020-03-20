@@ -71,7 +71,24 @@ export default class RelativePortal extends React.Component {
     top: 0,
   };
 
+  handleCustomOnScroll = () => {
+    let elementContainer = document.getElementsByClassName('properties-wrapper');
+    elementContainer[0] && elementContainer[0].addEventListener('mousewheel', (e) => {
+        clearTimeout(timer);
+        var timer = setTimeout(() => {
+        this.handleScroll(e);
+      }, 50);
+    });
+    elementContainer[0] && elementContainer[0].addEventListener('DOMMouseScroll', (e) => {
+      clearTimeout(timer);
+      var timer = setTimeout(() => {
+      this.handleScroll(e);
+    }, 50);
+    });
+  }
+
   componentDidMount() {
+    this.handleCustomOnScroll();
     this.handleScroll = () => {
       if (this.element) {
         const rect = this.element.getBoundingClientRect();
