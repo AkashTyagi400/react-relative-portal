@@ -100,13 +100,13 @@ var RelativePortal = function (_React$Component) {
       top: 0
     }, _this.handleCustomOnScroll = function () {
       var elementContainer = document.getElementsByClassName('properties-wrapper');
-      elementContainer[0] && elementContainer[0].addEventListener('mousewheel', function (e) {
+      elementContainer && elementContainer[0] && elementContainer[0].addEventListener('mousewheel', function (e) {
         clearTimeout(timer);
         var timer = setTimeout(function () {
           _this.handleScroll(e);
         }, 50);
       });
-      elementContainer[0] && elementContainer[0].addEventListener('DOMMouseScroll', function (e) {
+      elementContainer && elementContainer[0] && elementContainer[0].addEventListener('DOMMouseScroll', function (e) {
         clearTimeout(timer);
         var timer = setTimeout(function () {
           _this.handleScroll(e);
