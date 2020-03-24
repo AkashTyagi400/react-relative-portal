@@ -86,7 +86,7 @@ var RelativePortal = function (_React$Component) {
   function RelativePortal() {
     var _ref;
 
-    var _temp, _this, _ret;
+    var _temp, _this2, _ret;
 
     _classCallCheck(this, RelativePortal);
 
@@ -94,43 +94,59 @@ var RelativePortal = function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = RelativePortal.__proto__ || Object.getPrototypeOf(RelativePortal)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, (_ref = RelativePortal.__proto__ || Object.getPrototypeOf(RelativePortal)).call.apply(_ref, [this].concat(args))), _this2), _this2.state = {
       right: 0,
       left: 0,
       top: 0
-    }, _this.handleCustomOnScroll = function () {
-      var elementContainer = document.getElementsByClassName('properties-wrapper');
-      elementContainer && elementContainer[0] && elementContainer[0].addEventListener('mousewheel', function (e) {
+    }, _this2.handleCustomOnScroll = function () {
+      var elementContainer = document.querySelector('.editor-discard-save ~ .scrollbar-container');
+      var propertyWrapper = document.querySelector('.properties-wrapper');
+
+      propertyWrapper && propertyWrapper.addEventListener('mousewheel', function (e) {
         clearTimeout(timer);
         var timer = setTimeout(function () {
-          _this.handleScroll(e);
+          this.handleScroll(e);
         }, 50);
       });
-      elementContainer && elementContainer[0] && elementContainer[0].addEventListener('DOMMouseScroll', function (e) {
+
+      elementContainer && elementContainer.addEventListener("mousedown", function (e) {
+        document.body.addEventListener('mousemove', function (e) {
+          clearTimeout(timer);
+          var timer = setTimeout(function () {
+            this.handleScroll(e);
+          }, 50);
+        });
+      });
+
+      elementContainer && elementContainer.addEventListener("mouseup", function () {
+        this.removeEventListener("mousemove", _this.handleScroll());
+      });
+
+      propertyWrapper && propertyWrapper.addEventListener('DOMMouseScroll', function (e) {
         clearTimeout(timer);
         var timer = setTimeout(function () {
-          _this.handleScroll(e);
+          this.handleScroll(e);
         }, 50);
       });
-    }, _temp), _possibleConstructorReturn(_this, _ret);
+    }, _temp), _possibleConstructorReturn(_this2, _ret);
   }
 
   _createClass(RelativePortal, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.handleCustomOnScroll();
       this.handleScroll = function () {
-        if (_this2.element) {
-          var rect = _this2.element.getBoundingClientRect();
+        if (_this3.element) {
+          var rect = _this3.element.getBoundingClientRect();
           var pageOffset = getPageOffset();
           var top = pageOffset.y + rect.top;
           var right = document.documentElement.clientWidth - rect.right - pageOffset.x;
           var left = pageOffset.x + rect.left;
 
-          if (top !== _this2.state.top || left !== _this2.state.left || right !== _this2.state.right) {
-            _this2.setState({ left: left, top: top, right: right });
+          if (top !== _this3.state.top || left !== _this3.state.left || right !== _this3.state.right) {
+            _this3.setState({ left: left, top: top, right: right });
           }
         }
       };
@@ -150,7 +166,7 @@ var RelativePortal = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _props = this.props,
           Comp = _props.component,
@@ -168,7 +184,7 @@ var RelativePortal = function (_React$Component) {
         Comp,
         {
           ref: function ref(element) {
-            _this3.element = element;
+            _this4.element = element;
           }
         },
         _react2.default.createElement(

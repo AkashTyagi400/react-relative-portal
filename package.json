@@ -1,5 +1,5 @@
 {
-  "name": "react-relative-portal",
+  "name": "xavient-relative-portal",
   "version": "1.7.1",
   "description": "React component for place dropdowns outside overflow: hidden; elements",
   "main": "dist/RelativePortal.js",

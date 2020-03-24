@@ -72,20 +72,34 @@ export default class RelativePortal extends React.Component {
   };
 
   handleCustomOnScroll = () => {
-    let elementContainer = document.getElementsByClassName('properties-wrapper');
-    elementContainer && elementContainer[0] && 
-    elementContainer[0].addEventListener('mousewheel', (e) => {
-        clearTimeout(timer);
-        var timer = setTimeout(() => {
+    let elementContainer = document.querySelector('.editor-discard-save ~ .scrollbar-container');
+    let propertyWrapper = document.querySelector('.properties-wrapper');
+
+    propertyWrapper && propertyWrapper.addEventListener('mousewheel', function (e) {
+      clearTimeout(timer);
+      var timer = setTimeout(function () {
         this.handleScroll(e);
       }, 50);
     });
-    elementContainer && elementContainer[0] && 
-    elementContainer[0].addEventListener('DOMMouseScroll', (e) => {
+
+    elementContainer && elementContainer.addEventListener("mousedown", function (e) {
+      document.body.addEventListener('mousemove', (e) => {
+        clearTimeout(timer);
+        var timer = setTimeout(function () {
+          this.handleScroll(e);
+        }, 50);
+      })
+    });
+
+    elementContainer && elementContainer.addEventListener("mouseup", function () {
+      this.removeEventListener("mousemove", _this.handleScroll());
+    })
+
+    propertyWrapper && propertyWrapper.addEventListener('DOMMouseScroll', function (e) {
       clearTimeout(timer);
-      var timer = setTimeout(() => {
-      this.handleScroll(e);
-    }, 50);
+      var timer = setTimeout(function () {
+        this.handleScroll(e);
+      }, 50);
     });
   }
 
