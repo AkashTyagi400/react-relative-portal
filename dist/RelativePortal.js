@@ -86,7 +86,7 @@ var RelativePortal = function (_React$Component) {
   function RelativePortal() {
     var _ref;
 
-    var _temp, _this2, _ret;
+    var _temp, _this, _ret;
 
     _classCallCheck(this, RelativePortal);
 
@@ -94,65 +94,54 @@ var RelativePortal = function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, (_ref = RelativePortal.__proto__ || Object.getPrototypeOf(RelativePortal)).call.apply(_ref, [this].concat(args))), _this2), _this2.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = RelativePortal.__proto__ || Object.getPrototypeOf(RelativePortal)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       right: 0,
       left: 0,
       top: 0
-    }, _this2.handleCustomOnScroll = function () {
-      var elementContainer = document.querySelector('.editor-discard-save ~ .scrollbar-container');
+    }, _this.handleCustomOnScroll = function () {
+      var elementContainer = document.querySelector('.editor-discard-save  ~ .scrollbar-container.ps .ps__rail-y');
+
       var propertyWrapper = document.querySelector('.properties-wrapper');
 
       propertyWrapper && propertyWrapper.addEventListener('mousewheel', function (e) {
-        var _this3 = this;
-
         clearTimeout(timer);
         var timer = setTimeout(function () {
-          _this3.handleScroll(e);
+          _this.handleScroll(e);
         }, 50);
       });
 
-      elementContainer && elementContainer.addEventListener("mousedown", function (e) {
-        var _this4 = this;
-
-        document.body.addEventListener('mousemove', function (e) {
-          clearTimeout(timer);
-          var timer = setTimeout(function () {
-            _this4.handleScroll(e);
-          }, 50);
-        });
-      });
-
-      elementContainer && elementContainer.addEventListener("mouseup", function () {
-        this.removeEventListener("mousemove", _this.handleScroll());
+      elementContainer && elementContainer.addEventListener("mousemove", function (e) {
+        clearTimeout(timer);
+        var timer = setTimeout(function () {
+          _this.handleScroll(e);
+        }, 50);
       });
 
       propertyWrapper && propertyWrapper.addEventListener('DOMMouseScroll', function (e) {
-        var _this5 = this;
-
         clearTimeout(timer);
         var timer = setTimeout(function () {
-          _this5.handleScroll(e);
+          _this.handleScroll(e);
         }, 50);
       });
-    }, _temp), _possibleConstructorReturn(_this2, _ret);
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(RelativePortal, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this6 = this;
+      var _this2 = this;
 
       this.handleCustomOnScroll();
       this.handleScroll = function () {
-        if (_this6.element) {
-          var rect = _this6.element.getBoundingClientRect();
+        if (_this2.element) {
+          var rect = _this2.element.getBoundingClientRect();
           var pageOffset = getPageOffset();
           var top = pageOffset.y + rect.top;
           var right = document.documentElement.clientWidth - rect.right - pageOffset.x;
           var left = pageOffset.x + rect.left;
 
-          if (top !== _this6.state.top || left !== _this6.state.left || right !== _this6.state.right) {
-            _this6.setState({ left: left, top: top, right: right });
+          if (top !== _this2.state.top || left !== _this2.state.left || right !== _this2.state.right) {
+            _this2.setState({ left: left, top: top, right: right });
           }
         }
       };
@@ -172,7 +161,7 @@ var RelativePortal = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this7 = this;
+      var _this3 = this;
 
       var _props = this.props,
           Comp = _props.component,
@@ -190,7 +179,7 @@ var RelativePortal = function (_React$Component) {
         Comp,
         {
           ref: function ref(element) {
-            _this7.element = element;
+            _this3.element = element;
           }
         },
         _react2.default.createElement(
