@@ -94,24 +94,15 @@ export default class RelativePortal extends React.Component {
     let propertyWrapper = elementProperty ? elementProperty : pageProperty;
 
     propertyWrapper && propertyWrapper.addEventListener('mousewheel', (e) => {
-      // clearTimeout(timer);
-      // let timer = setTimeout(() => {
         this.handleScroll(e);
-      // }, 0);
     });
 
     elementContainer && elementContainer.addEventListener("mousemove", (e) => {
-      // clearTimeout(timer);
-      // let timer = setTimeout(() => {
         this.handleScroll(e);
-      // }, 0);
     });
 
     propertyWrapper && propertyWrapper.addEventListener('DOMMouseScroll', (e) => {
-      // clearTimeout(timer);
-      // let timer = setTimeout(() => {
         this.handleScroll(e);
-      // }, 0);
     });
   }
 
@@ -123,8 +114,6 @@ export default class RelativePortal extends React.Component {
 
   componentDidUpdate() {
     this.handleCustomOnScroll();
-
-    // this.handleScroll();
   }
 
   componentWillUnmount() {
