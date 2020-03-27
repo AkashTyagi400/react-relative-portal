@@ -71,55 +71,62 @@ export default class RelativePortal extends React.Component {
     top: 0,
   };
 
+  handleScroll = () => {
+    if (this.element) {
+      const rect = this.element.getBoundingClientRect();
+      const pageOffset = getPageOffset();
+      const top = pageOffset.y + rect.top;
+      const right = document.documentElement.clientWidth - rect.right - pageOffset.x;
+      const left = pageOffset.x + rect.left;
+
+      if (top !== this.state.top || left !== this.state.left || right !== this.state.right) {
+        this.setState({ left, top, right });
+      }
+    }
+  };
+
   handleCustomOnScroll = () => {
     let elementContainer = document.querySelector(
       '.editor-discard-save  ~ .scrollbar-container.ps .ps__rail-y');
+      debugger;
     
-    let propertyWrapper = document.querySelector('.properties-wrapper');
+    let pageProperty = document.querySelector('.properties-wrapper');
+    let elementProperty = document.querySelector('.propertyAccordionWrapper .elementEditorcontainer');
+    let propertyWrapper = elementProperty ? elementProperty : pageProperty;
 
     propertyWrapper && propertyWrapper.addEventListener('mousewheel', (e) => {
-      clearTimeout(timer);
-      let timer = setTimeout(() => {
+      // clearTimeout(timer);
+      // let timer = setTimeout(() => {
         this.handleScroll(e);
-      }, 50);
+      // }, 0);
     });
 
     elementContainer && elementContainer.addEventListener("mousemove", (e) => {
-      clearTimeout(timer);
-      let timer = setTimeout(() => {
+      // clearTimeout(timer);
+      // let timer = setTimeout(() => {
         this.handleScroll(e);
-      }, 50);
+      // }, 0);
     });
 
     propertyWrapper && propertyWrapper.addEventListener('DOMMouseScroll', (e) => {
-      clearTimeout(timer);
-      let timer = setTimeout(() => {
+      // clearTimeout(timer);
+      // let timer = setTimeout(() => {
         this.handleScroll(e);
-      }, 50);
+      // }, 0);
     });
   }
 
   componentDidMount() {
+    debugger;
     this.handleCustomOnScroll();
-    this.handleScroll = () => {
-      if (this.element) {
-        const rect = this.element.getBoundingClientRect();
-        const pageOffset = getPageOffset();
-        const top = pageOffset.y + rect.top;
-        const right = document.documentElement.clientWidth - rect.right - pageOffset.x;
-        const left = pageOffset.x + rect.left;
-
-        if (top !== this.state.top || left !== this.state.left || right !== this.state.right) {
-          this.setState({ left, top, right });
-        }
-      }
-    };
     this.unsubscribe = subscribe(this.handleScroll);
     this.handleScroll();
   }
 
   componentDidUpdate() {
-    this.handleScroll();
+    this.handleCustomOnScroll();
+
+    // this.handleScroll();
   }
 
   componentWillUnmount() {
