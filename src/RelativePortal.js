@@ -88,7 +88,6 @@ export default class RelativePortal extends React.Component {
   handleCustomOnScroll = () => {
     let elementContainer = document.querySelector(
       '.editor-discard-save  ~ .scrollbar-container.ps .ps__rail-y');
-      debugger;
     
     let pageProperty = document.querySelector('.properties-wrapper');
     let elementProperty = document.querySelector('.propertyAccordionWrapper .elementEditorcontainer');
@@ -117,7 +116,6 @@ export default class RelativePortal extends React.Component {
   }
 
   componentDidMount() {
-    debugger;
     this.handleCustomOnScroll();
     this.unsubscribe = subscribe(this.handleScroll);
     this.handleScroll();
