@@ -111,23 +111,16 @@ var RelativePortal = function (_React$Component) {
         }
       }
     }, _this.handleCustomOnScroll = function () {
-      var elementContainer = document.querySelector('.editor-discard-save  ~ .scrollbar-container.ps .ps__rail-y');
+      var _this$props = _this.props,
+          scrollContainer = _this$props.variablePopupScrollWrapper,
+          open = _this$props.open,
+          scrollWrapper = document.querySelector(scrollContainer);
 
-      var pageProperty = document.querySelector('.properties-wrapper');
-      var elementProperty = document.querySelector('.propertyAccordionWrapper .elementEditorcontainer');
-      var propertyWrapper = elementProperty ? elementProperty : pageProperty;
-
-      propertyWrapper && propertyWrapper.addEventListener('mousewheel', function (e) {
-        _this.handleScroll(e);
-      });
-
-      elementContainer && elementContainer.addEventListener("mousemove", function (e) {
-        _this.handleScroll(e);
-      });
-
-      propertyWrapper && propertyWrapper.addEventListener('DOMMouseScroll', function (e) {
-        _this.handleScroll(e);
-      });
+      if (open) {
+        scrollWrapper && scrollWrapper.addEventListener('scroll', function (e) {
+          _this.handleScroll(e);
+        });
+      }
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
