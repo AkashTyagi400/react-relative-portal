@@ -86,24 +86,13 @@ export default class RelativePortal extends React.Component {
   };
 
   handleCustomOnScroll = () => {
-    let elementContainer = document.querySelector(
-      '.editor-discard-save  ~ .scrollbar-container.ps .ps__rail-y');
-    
-    let pageProperty = document.querySelector('.properties-wrapper');
-    let elementProperty = document.querySelector('.propertyAccordionWrapper .elementEditorcontainer');
-    let propertyWrapper = elementProperty ? elementProperty : pageProperty;
-
-    propertyWrapper && propertyWrapper.addEventListener('mousewheel', (e) => {
-        this.handleScroll(e);
-    });
-
-    elementContainer && elementContainer.addEventListener("mousemove", (e) => {
-        this.handleScroll(e);
-    });
-
-    propertyWrapper && propertyWrapper.addEventListener('DOMMouseScroll', (e) => {
-        this.handleScroll(e);
-    });
+    let {variablePopupScrollWrapper:scrollContainer, open} = this.props,
+      scrollWrapper = document.querySelector(scrollContainer);
+      if(open){
+        scrollWrapper && scrollWrapper.addEventListener('scroll', (e) => {
+          this.handleScroll(e);
+        });
+      }
   }
 
   componentDidMount() {
