@@ -98,60 +98,43 @@ var RelativePortal = function (_React$Component) {
       right: 0,
       left: 0,
       top: 0
+    }, _this.handleScroll = function () {
+      if (_this.element) {
+        var rect = _this.element.getBoundingClientRect();
+        var pageOffset = getPageOffset();
+        var top = pageOffset.y + rect.top;
+        var right = document.documentElement.clientWidth - rect.right - pageOffset.x;
+        var left = pageOffset.x + rect.left;
+
+        if (top !== _this.state.top || left !== _this.state.left || right !== _this.state.right) {
+          _this.setState({ left: left, top: top, right: right });
+        }
+      }
     }, _this.handleCustomOnScroll = function () {
-      var elementContainer = document.querySelector('.editor-discard-save  ~ .scrollbar-container.ps .ps__rail-y');
+      var _this$props = _this.props,
+          scrollContainer = _this$props.variablePopupScrollWrapper,
+          open = _this$props.open,
+          scrollWrapper = document.querySelector(scrollContainer);
 
-      var propertyWrapper = document.querySelector('.properties-wrapper');
-
-      propertyWrapper && propertyWrapper.addEventListener('mousewheel', function (e) {
-        clearTimeout(timer);
-        var timer = setTimeout(function () {
+      if (open) {
+        scrollWrapper && scrollWrapper.addEventListener('scroll', function (e) {
           _this.handleScroll(e);
-        }, 50);
-      });
-
-      elementContainer && elementContainer.addEventListener("mousemove", function (e) {
-        clearTimeout(timer);
-        var timer = setTimeout(function () {
-          _this.handleScroll(e);
-        }, 50);
-      });
-
-      propertyWrapper && propertyWrapper.addEventListener('DOMMouseScroll', function (e) {
-        clearTimeout(timer);
-        var timer = setTimeout(function () {
-          _this.handleScroll(e);
-        }, 50);
-      });
+        });
+      }
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(RelativePortal, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this2 = this;
-
       this.handleCustomOnScroll();
-      this.handleScroll = function () {
-        if (_this2.element) {
-          var rect = _this2.element.getBoundingClientRect();
-          var pageOffset = getPageOffset();
-          var top = pageOffset.y + rect.top;
-          var right = document.documentElement.clientWidth - rect.right - pageOffset.x;
-          var left = pageOffset.x + rect.left;
-
-          if (top !== _this2.state.top || left !== _this2.state.left || right !== _this2.state.right) {
-            _this2.setState({ left: left, top: top, right: right });
-          }
-        }
-      };
       this.unsubscribe = subscribe(this.handleScroll);
       this.handleScroll();
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
-      this.handleScroll();
+      this.handleCustomOnScroll();
     }
   }, {
     key: 'componentWillUnmount',
@@ -161,7 +144,7 @@ var RelativePortal = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       var _props = this.props,
           Comp = _props.component,
@@ -179,7 +162,7 @@ var RelativePortal = function (_React$Component) {
         Comp,
         {
           ref: function ref(element) {
-            _this3.element = element;
+            _this2.element = element;
           }
         },
         _react2.default.createElement(
